@@ -4,7 +4,15 @@ const https = require("https");
 const app = express();
 
 app.get("/", function(req, res){
-    res.send("Hello world!")
+    const url = "https://zenquotes.io/api/random"
+    https.get(url, function(response){
+        response.on("data", function(data){
+            const quoteData = JSON.parse(data);
+            const quote = quoteData[0].q;
+            const author = quoteData[0].a;
+            res.send("<h1>" + quote + "<h1> <br> <h2> - " + author + "<h2>")
+        })
+    })
 })
 
 app.listen(3000, function(){
