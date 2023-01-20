@@ -1,9 +1,13 @@
 const express = require("express");
 const https = require("https");
-
 const app = express();
 
 app.get("/", function(req, res){
+    res.sendFile(__dirname + "/index.html")
+})
+
+app.post("/", function(req, res){
+    console.log("Buttonclick received!")
     const url = "https://zenquotes.io/api/random"
     https.get(url, function(response){
         response.on("data", function(data){
@@ -14,6 +18,7 @@ app.get("/", function(req, res){
         })
     })
 })
+
 
 app.listen(3000, function(){
     console.log("Server is running on Port 3000.");
